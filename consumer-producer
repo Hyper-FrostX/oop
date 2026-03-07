@@ -1,0 +1,92 @@
+ class SharedBuffers
+ {
+    private int number;
+    private boolean available = false;
+
+    public synchronized void put(int value, int pid)
+    {
+        while (available)
+        {
+            try
+            {
+                wait();
+            }
+            catch (InterruptedException e) { }
+        }
+
+        number = value;
+        System.out.println("Producer #" + pid + " put: " + value);
+
+        available = true;
+        notify();
+    }
+
+    public synchronized void get(int cid)
+    {
+        while (!available)
+        {
+            try
+            {
+                wait();
+            }
+            catch (InterruptedException e) { }
+        }
+
+        System.out.println("Consumer #" + cid + " got: " + number);
+
+        available = false;
+        notify();
+    }
+}
+class Producers extends Thread
+{
+    SharedBuffers buffers;
+    int id;
+
+    Producers(SharedBuffers b, int id)
+    {
+        this.buffers = b;
+        this.id = id;
+    }
+
+    public void run()
+    {
+        for(int i=0; i<=5; i++)
+        {
+            buffers.put(i,id);
+        }
+    }
+}
+
+class consumer extends Thread
+{
+    SharedBuffers buffers;
+    int id;
+
+    consumer (SharedBuffers b, int id)
+    {
+        this.buffers=b;
+        this.id=id;
+    }
+
+    public void run()
+    {
+        for(int i=0; i<=5; i++)
+        {
+            buffers.get(id);
+        }
+    }
+}
+
+public class practic
+{
+    public static void main(String[] args)
+    {
+        SharedBuffers buffers = new SharedBuffers();
+        Producers p = new Producers(buffers,1);
+        consumer c = new consumer(buffers,1);
+
+        p.start();
+        c.start();
+    }
+}
