@@ -1,0 +1,102 @@
+package Shapes;
+
+public class Circle {
+    double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+package Shapes;
+
+public class Square {
+    double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    public double area() {
+        return side * side;
+    }
+}
+
+package Shapes;
+
+public class Triangle {
+    double base, height;
+
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    public double area() {
+        return 0.5 * base * height;
+    }
+}
+
+package Main;
+
+import java.util.Scanner;
+import Shapes.Square;
+import Shapes.Triangle;
+import Shapes.Circle;
+
+public class MainClass {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int choice;
+        do {
+            System.out.println("\n====== AREA CALCULATOR ======");
+            System.out.println("1. Area of Square");
+            System.out.println("2. Area of Triangle");
+            System.out.println("3. Area of Circle");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter side of Square: ");
+                    double side = sc.nextDouble();
+                    Square sq = new Square(side);
+                    System.out.println("Area of Square = " + sq.area());
+                    break;
+
+                case 2:
+                    System.out.print("Enter base of Triangle: ");
+                    double base = sc.nextDouble();
+                    System.out.print("Enter height of Triangle: ");
+                    double height = sc.nextDouble();
+                    Triangle tr = new Triangle(base, height);
+                    System.out.println("Area of Triangle = " + tr.area());
+                    break;
+
+                case 3:
+                    System.out.print("Enter radius of Circle: ");
+                    double radius = sc.nextDouble();
+                    Circle cr = new Circle(radius);
+                    System.out.println("Area of Circle = " + cr.area());
+                    break;
+
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
