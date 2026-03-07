@@ -1,0 +1,147 @@
+package printer;
+import java.util.*;
+abstract class Printer
+{
+	abstract void configuration();
+	abstract void display();
+}
+class Dotmatrix extends Printer
+{
+	@Override
+	void configuration() {
+		System.out.println("dotmatrix printers are:");
+		System.out.println("resolution:180 dpi");
+		System.out.println("speed:10 cps");
+		System.out.println("noise:more");
+	}
+	@Override
+	void display()
+	{
+		System.out.println("dotmatrix printers are printing documents");
+		
+	}
+	
+}
+class Laserjet extends Printer
+{
+	@Override 
+	void configuration()
+	{
+		System.out.println("laserjet printers are:");
+		System.out.println("resolution:1200 dpi");
+		System.out.println("speed:30 cps");
+		System.out.println("noise:less");
+	}
+	@Override
+	void display()
+	{
+		System.out.println("laserjet printers are printing documents");
+		
+	}
+}
+public class DriverCode{
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		Printer p1;
+		while(true)
+		{
+			System.out.println("1.Dotmatrix");
+			System.out.println("2.Laserjet");
+			System.out.println("3.Exit");
+			System.out.println("enter your choice:");
+			int c=sc.nextInt();
+			switch(c)
+			{
+			case 1:
+				p1=new Dotmatrix();
+				p1.configuration();
+				p1.display();
+				break;
+			case 2:
+				p1=new Laserjet();
+				p1.configuration();
+				p1.display();
+				break;
+			case 3:
+				System.exit(0);
+				break;
+				default:
+					System.out.println("Invalid choice");
+			}
+			
+		}
+	}
+}
+
+package polymorphism;
+import java.util.*;
+interface Vehicle
+{
+	public void drive();
+	public void engine();
+}
+class Car implements Vehicle
+{
+	@Override
+	public void drive()
+	{
+		System.out.println("Car Details");
+		System.out.println("Car has 4 wheels");
+		System.out.println("Car has 1 steering");	
+	}
+	@Override
+	public void engine()
+	{
+		System.out.println("the starter of the car is very smooth");
+		
+	}
+}
+class Motorcycle implements Vehicle
+{
+	@Override
+	public void drive()
+	{
+		System.out.println("Motorcycle Details");
+		System.out.println("Bike has 2 wheels");
+		System.out.println("bike has gears");
+	}
+	@Override
+	public void engine()
+	{
+		System.out.println("the quick start of the bike is not smooth");
+	}
+}
+public class DriverClass{
+	public static void main(String[] args){
+		Scanner sc=new Scanner(System.in);
+		Vehicle v1;
+		while (true)
+		{
+			System.out.println("1.Car");
+			System.out.println("2.Motorcycle");
+			System.out.println("3.exit");
+			System.out.println("Enter your choice");
+			int c=sc.nextInt();
+			switch(c)
+			{
+			case 1:
+				v1=new Car();
+				v1.drive();
+				v1.engine();
+				break;
+			case 2:
+				Vehicle obj=new Motorcycle();
+				obj.drive();
+				obj.engine();
+				break;
+			case 3:
+				System.exit(0);
+				break;
+				default:
+					System.out.println("invalid choice");
+			}
+		}
+		
+		
+	}
+}
