@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+class InvalidAgeException extends Exception {
+    InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class age {
+
+    static void validateAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Error: Enter valid age (18 or above)");
+        }
+        System.out.println("Registration Successful");
+    }
+
+    static int divideNumbers(int dividend, int divisor) {
+        if (divisor == 0) {
+            throw new ArithmeticException("Error: Divisor should not be zero");
+        }
+        return dividend / divisor;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        while (true) {
+
+            System.out.println("\n1. Age validation");
+            System.out.println("2. Arithmetic validation");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            try {
+
+                switch (choice) {
+
+                    case 1:
+                        System.out.print("Enter age: ");
+                        int age = sc.nextInt();
+                        validateAge(age);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter dividend: ");
+                        int a = sc.nextInt();
+
+                        System.out.print("Enter divisor: ");
+                        int b = sc.nextInt();
+
+                        int result = divideNumbers(a, b);
+                        System.out.println("Result = " + result);
+                        break;
+
+                    case 3:
+                        System.out.println("Program Ended");
+                        sc.close();
+                        return;
+
+                    default:
+                        System.out.println("Invalid Option");
+                }
+
+            } catch (InvalidAgeException | ArithmeticException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
+}
