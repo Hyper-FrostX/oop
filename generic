@@ -1,0 +1,87 @@
+import java.util.Scanner;
+
+// Generic Class
+class Storage<T> {
+    private T item;
+
+    public Storage(T item) {
+        this.item = item;
+    }
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public T getItem()
+    {
+        return this.item;
+    }
+}
+
+public class generic {
+
+    // Generic Method
+    public static <E> void printArray(E[] array)
+    {
+        for (E element : array) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1. Integer");
+        System.out.println("2. String");
+        System.out.println("3. Double");
+        System.out.println("4. Array");
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+
+            case 1:
+                Storage<Integer> intStore = new Storage<>(10);
+                System.out.println("Integer value: " + intStore.getItem());
+                intStore.setItem(20);
+                System.out.println("Updated Integer value: " + intStore.getItem());
+                break;
+
+            case 2:
+                Storage<String> strStore = new Storage<>("Hello");
+                System.out.println("String value: " + strStore.getItem());
+                strStore.setItem("World");
+                System.out.println("Updated String value: " + strStore.getItem());
+                break;
+
+            case 3:
+                Storage<Double> dblStore = new Storage<>(12.5);
+                System.out.println("Double value: " + dblStore.getItem());
+                dblStore.setItem(25.5);
+                System.out.println("Updated Double value: " + dblStore.getItem());
+                break;
+
+            case 4:
+                Integer[] intArray = {1, 2, 3, 4};
+                String[] strArray = {"Good", "Morning", "Java"};
+                Double[] dblArray = {1.1, 2.2, 3.3};
+
+                System.out.println("Integer Array:");
+                printArray(intArray);
+
+                System.out.println("String Array:");
+                printArray(strArray);
+
+                System.out.println("Double Array:");
+                printArray(dblArray);
+                break;
+
+            default:
+                System.out.println("Invalid choice");
+        }
+
+        sc.close();
+    }
+}
