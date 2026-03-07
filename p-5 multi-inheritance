@@ -1,0 +1,91 @@
+5 program
+package inheritenceprg5;
+import java.util.*;
+
+interface Personal {
+    void personalDetails();
+}
+
+interface Official {
+    void officialDetails();
+}
+
+class Employee implements Personal, Official {
+    String name;
+    int age;
+    String designation;
+    String department;
+
+    Employee(String name, int age, String designation, String department) {
+        this.name = name;
+        this.age = age;
+        this.designation = designation;
+        this.department = department;
+    }
+
+    public void personalDetails() {
+        System.out.println("----- Personal Details -----");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+
+    public void officialDetails() {
+        System.out.println("----- Official Details -----");
+        System.out.println("Designation: " + designation);
+        System.out.println("Department: " + department);
+    }
+}
+
+public class MultipleInheritence {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Input employee details
+        System.out.println("Enter Employee Details");
+
+        System.out.print("Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Age: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Designation: ");
+        String designation = sc.nextLine();
+
+        System.out.print("Department: ");
+        String department = sc.nextLine();
+
+        Employee emp = new Employee(name, age, designation, department);
+
+        while (true) {
+            System.out.println("\nMenu");
+            System.out.println("1. Display Personal Details");
+            System.out.println("2. Display Official Details");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    emp.personalDetails();
+                    break;
+
+                case 2:
+                    emp.officialDetails();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    sc.close();
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+}
