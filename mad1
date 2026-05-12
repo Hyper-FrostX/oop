@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress Bar Experiment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/progressstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Download"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>
+
+
+package com.example.myapplication;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+
+        Button submit = findViewById(R.id.start);
+        TextView progressstatus = findViewById(R.id.progressstatus);
+        ProgressBar pgb = findViewById(R.id.progressBar);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressstatus.setVisibility(View.VISIBLE);
+                pgb.setVisibility(View.VISIBLE);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        int i = 0;
+
+                        while (i <= 100) {
+
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            int progress = i;
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    pgb.setProgress(progress);
+                                    progressstatus.setText("Progress Status " + progress + "%");
+
+                                    if (progress >= 100) {
+
+                                        AlertDialog.Builder al =
+                                                new AlertDialog.Builder(MainActivity.this);
+
+                                        al.setTitle("Download Window");
+
+                                        al.setMessage("Download Complete");
+
+                                        al.setNegativeButton("Cancel",
+                                                (dialog, which) -> {
+                                                    submit.setVisibility(View.VISIBLE);
+                                                    dialog.dismiss();
+                                                });
+
+                                        al.setPositiveButton("OK",
+                                                (dialog, which) -> finish());
+
+                                        al.show();
+                                    }
+                                }
+                            });
+
+                            i++;
+                        }
+                    }
+                }).start();
+            }
+        });
+    }
+}
